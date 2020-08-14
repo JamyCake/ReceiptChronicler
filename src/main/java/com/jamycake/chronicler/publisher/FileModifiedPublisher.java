@@ -32,11 +32,11 @@ public class FileModifiedPublisher implements Publisher {
     }
 
     private void runWorkingCycle() throws Exception{
-        while (shouldWork){
-            notifySubscribers();
+        while (shouldWork){            
             try {
+                notifySubscribers();
                 Thread.sleep(interval);
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | ArrayIndexOutOfBoundsException e) {
                 e.printStackTrace();
             }
         }
