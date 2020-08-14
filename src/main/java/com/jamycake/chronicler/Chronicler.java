@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class Chronicler  {
+public class Chronicler {
 
     private static final String NOT_ENOUGH_ARGUMENTS = "Not enough command line arguments";
     private static final String HELP = "Use [path to tracked file] [path to destination folder] [interval ms]";
@@ -18,7 +18,7 @@ public class Chronicler  {
     private static final String CHRONICLER_STARTED = "Chronicler started. Close your terminal or interrupt " +
             "process if you want to stop it";
 
-    private Publisher publisher;
+    private final Publisher publisher;
 
     public Chronicler(Publisher publisher, Subscriber subscriber) {
         this.publisher = publisher;

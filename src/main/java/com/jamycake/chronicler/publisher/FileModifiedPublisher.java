@@ -8,12 +8,12 @@ import java.util.List;
 public class FileModifiedPublisher implements Publisher {
 
     private boolean shouldWork;
-    private long interval;
+    private final long interval;
 
-    private File observedFile;
+    private final File observedFile;
     private long lastChangeTime = 0;
 
-    private List<Subscriber> subscribers;
+    private final List<Subscriber> subscribers;
 
     public FileModifiedPublisher(final File file,
                                  final List<Subscriber> subscribers,

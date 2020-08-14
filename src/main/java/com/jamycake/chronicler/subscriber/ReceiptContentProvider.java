@@ -10,7 +10,7 @@ public class ReceiptContentProvider {
     private static final long ATTEMPT_READING_INTERVAL = 1000;
 
     private String charset;
-    private File receipt;
+    private final File receipt;
 
     public ReceiptContentProvider(final String path) throws FileNotFoundException {
         this.receipt = new File(path);

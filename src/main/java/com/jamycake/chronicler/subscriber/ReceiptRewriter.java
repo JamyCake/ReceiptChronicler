@@ -8,9 +8,9 @@ public class ReceiptRewriter implements Subscriber {
 
     private final static String RECEIPT_REWROTE = "Receipt \"%s\" rewrote to \"%s\"\n";
 
-    private File rewroteReceipt;
+    private final File rewroteReceipt;
     private String receiptContent;
-    private File destinationFolder;
+    private final File destinationFolder;
 
     public ReceiptRewriter(final File rewroteReceipt,
                            final File destinationFolder)
