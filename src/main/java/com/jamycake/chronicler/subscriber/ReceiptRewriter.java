@@ -19,11 +19,14 @@ public class ReceiptRewriter implements Subscriber {
         this.destinationFolder = destinationFolder;
     }
 
+
+
     @Override
     public void update() throws IOException{
         receiptContent = getReceiptContent();
         rewrite();
     }
+
 
 
     private String getReceiptContent() throws IOException {
@@ -33,19 +36,11 @@ public class ReceiptRewriter implements Subscriber {
         return contentProvider.getReceiptContent();
     }
 
+
+
     private void rewrite() throws IOException {
         File fileForWriting = getFileForWriting();
-
-        FileOutputStream outputStream = new FileOutputStream(fileForWriting);
-
-        final byte EOF = 0;
-        byte [] bytes = receiptContent.getBytes();
-        for (byte b : bytes){
-            if (b == EOF) break;
-            outputStream.write(b);
-        }
-
-        outputStream.close();
+        writeToFile(fileForWriting);
 
         printMessage(fileForWriting.getName(), destinationFolder.getAbsolutePath());
     }
@@ -63,6 +58,21 @@ public class ReceiptRewriter implements Subscriber {
         return name
                 .replaceAll(":", "-")
                 .replaceAll(" +", " ");
+    }
+
+
+
+    private void writeToFile(File fileForWriting) throws IOException {
+        FileOutputStream outputStream = new FileOutputStream(fileForWriting);
+
+        final byte EOF = 0;
+        byte [] bytes = receiptContent.getBytes();
+        for (byte b : bytes){
+            if (b == EOF) break;
+            outputStream.write(b);
+        }
+
+        outputStream.close();
     }
 
     private void printMessage(String ... mes) {
