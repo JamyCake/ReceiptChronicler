@@ -27,17 +27,17 @@ public class Chronicler  {
     }
 
     public static void main(String [] args) throws Exception{
-        Chronicler chronicler = Chronicler.getInstance(args);
         if (args.length > 0){
-            chronicler.printMessage(CHRONICLER_STARTED);
+            Chronicler chronicler = Chronicler.getInstance(args);
+            printMessage(CHRONICLER_STARTED);
             chronicler.start();
         } else {
-            chronicler.printMessage(NOT_ENOUGH_ARGUMENTS + "\n" + DESCRIPTION + "\n" + HELP);
+            printMessage(NOT_ENOUGH_ARGUMENTS + "\n" + DESCRIPTION + "\n" + HELP);
         }
 
     }
 
-    public void printMessage(String message){
+    public static void printMessage(String message){
         System.out.println(message);
     }
 
