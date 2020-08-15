@@ -54,10 +54,8 @@ public class ReceiptRewriter implements Subscriber {
 
     private String getName() {
         String [] strings = receiptContent.split("[\n\r]+");
-        String name = strings[4] + strings[12];
-        return name
-                .replaceAll(":", "-")
-                .replaceAll(" +", " ");
+        SberbankReceiptNameProvider nameProvider = new SberbankReceiptNameProvider();
+        return nameProvider.getName(strings);
     }
 
 
