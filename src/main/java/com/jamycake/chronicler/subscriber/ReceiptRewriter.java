@@ -27,12 +27,8 @@ public class ReceiptRewriter implements Subscriber {
         rewrite();
     }
 
-
-
     private String getReceiptContent() throws IOException {
         ReceiptContentProvider contentProvider = new ReceiptContentProvider(rewroteReceipt.getAbsolutePath());
-        String KOI8_R_CS = "KOI8-R";
-        contentProvider.setCharset(KOI8_R_CS);
         return contentProvider.getReceiptContent();
     }
 
@@ -53,9 +49,8 @@ public class ReceiptRewriter implements Subscriber {
     }
 
     private String getName() {
-        String [] strings = receiptContent.split("[\n\r]+");
         SberbankReceiptNameProvider nameProvider = new SberbankReceiptNameProvider();
-        return nameProvider.getName(strings);
+        return nameProvider.getName(receiptContent);
     }
 
 

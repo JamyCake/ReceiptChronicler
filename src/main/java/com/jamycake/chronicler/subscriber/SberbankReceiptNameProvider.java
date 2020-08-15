@@ -6,7 +6,10 @@ public class SberbankReceiptNameProvider {
     public static final String RECONCILIATION_OF_RESULTS = "Сверка итогов";
     public static final String UNKNOWN_RECEIPT_TYPE = "Unknown receipt type";
 
-    public String getName(String [] receiptStrings){
+    public String getName(String receiptContent){
+
+        String [] receiptStrings = receiptContent.split("[\n\r]+");
+
         if (receiptStrings[5].contains(PAYMENT)){
             String name = receiptStrings[4] + receiptStrings[12];
             return makeReplaces(name);

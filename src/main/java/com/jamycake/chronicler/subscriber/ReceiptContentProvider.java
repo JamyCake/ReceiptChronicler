@@ -8,17 +8,15 @@ public class ReceiptContentProvider {
     private static final char END_OF_FILE = '~';
     private static final String EMPTY_STRING = "";
     private static final long ATTEMPT_READING_INTERVAL = 1000;
+    private static final String KOI8_R_CS = "KOI8-R";
 
-    private String charset;
     private final File receipt;
+
+
 
     public ReceiptContentProvider(final String path) throws FileNotFoundException {
         this.receipt = new File(path);
         if (!receipt.exists()) throw new FileNotFoundException(receipt.getAbsolutePath());
-    }
-
-    public void setCharset(String charset) {
-        this.charset = charset;
     }
 
     public String getReceiptContent(){
@@ -37,18 +35,8 @@ public class ReceiptContentProvider {
 
     private String getResult() throws Exception {
         byte [] rawBytes = readRawBytesFromFile(receipt);
-        String result = encodeIfHaveCharset(rawBytes);
+        String result = new String(rawBytes, KOI8_R_CS);
         return result.replaceAll("\\x00{4,}", EMPTY_STRING);
-    }
-
-    private String encodeIfHaveCharset(byte[] rawBytes) throws UnsupportedEncodingException {
-        String result;
-        if (charset != null){
-            result = new String(rawBytes, charset);
-        } else {
-            result = new String(rawBytes);
-        }
-        return result;
     }
 
     private byte[] readRawBytesFromFile(final File file) throws IOException {
