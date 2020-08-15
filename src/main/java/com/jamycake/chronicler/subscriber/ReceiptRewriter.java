@@ -3,6 +3,8 @@ package com.jamycake.chronicler.subscriber;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ReceiptRewriter implements Subscriber {
 
@@ -10,15 +12,31 @@ public class ReceiptRewriter implements Subscriber {
 
     private final File rewroteReceipt;
     private String receiptContent;
+
     private final File destinationFolder;
+    private final File currentDayFolder;
 
     public ReceiptRewriter(final File rewroteReceipt,
                            final File destinationFolder)
     {
-        this.rewroteReceipt = rewroteReceipt;
+
         this.destinationFolder = destinationFolder;
+        currentDayFolder = createCurrentDayFolder();
+        this.rewroteReceipt = rewroteReceipt;
     }
 
+
+    private File createCurrentDayFolder() {
+        Date date = new Date();
+        final String DATE_FORMAT = "dd.MM.yyyy";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+        String folderName = dateFormat.format(date);
+
+        File folder = new File(destinationFolder, folderName);
+        folder.mkdir();
+
+        return folder;
+    }
 
 
     @Override
@@ -38,12 +56,12 @@ public class ReceiptRewriter implements Subscriber {
         File fileForWriting = getFileForWriting();
         writeToFile(fileForWriting);
 
-        printMessage(fileForWriting.getName(), destinationFolder.getAbsolutePath());
+        printMessage(fileForWriting.getName(), currentDayFolder.getAbsolutePath());
     }
 
     private File getFileForWriting() throws IOException{
         String wroteFileName = getName();
-        File file = new File(destinationFolder, wroteFileName);
+        File file = new File(currentDayFolder, wroteFileName);
         file.createNewFile();
         return file;
     }
