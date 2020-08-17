@@ -2,9 +2,12 @@ package com.jamycake.chronicler.subscriber;
 
 public class SberbankReceiptNameProvider {
 
-    public static final String PAYMENT = "Оплата";
-    public static final String RECONCILIATION_OF_RESULTS = "Сверка итогов";
-    public static final String UNKNOWN_RECEIPT_TYPE = "Unknown receipt type";
+    private static final String PAYMENT = "Оплата";
+    private static final String CANCEL = "Отмена";
+    private static final String RECONCILIATION_OF_RESULTS = "Сверка итогов";
+    private static final String UNKNOWN_RECEIPT_TYPE = "Unknown receipt type";
+
+    private static final int RECEIPT_INDICATOR_INDEX = 4;
 
     public String getName(String receiptContent){
 
@@ -15,13 +18,17 @@ public class SberbankReceiptNameProvider {
         }
         if (receiptStrings[5].contains(RECONCILIATION_OF_RESULTS)){
             return getReconciliationReceiptName(receiptStrings);
-        } else {
+        }
+        if (receiptStrings[5].contains(CANCEL)){
+            String name = CANCEL + receiptStrings[RECEIPT_INDICATOR_INDEX];
+            return makeReplaces(name);
+        }
+        else {
             return UNKNOWN_RECEIPT_TYPE;
         }
     }
 
     private String getPaymentReceiptName(String[] receiptStrings) {
-        final int RECEIPT_INDICATOR_INDEX = 4;
         final int RECEIPT_SUM_INDEX = 12;
 
         String name = receiptStrings[RECEIPT_INDICATOR_INDEX] + receiptStrings[RECEIPT_SUM_INDEX];
